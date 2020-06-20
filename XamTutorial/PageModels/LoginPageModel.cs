@@ -4,31 +4,65 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XamTutorial.PageModels.Base;
+using XamTutorial.Services.Account;
 using XamTutorial.Services.Navigation;
 
 namespace XamTutorial.PageModels
 {
     public class LoginPageModel : PageModelBase
     {
-        private ICommand _signInCommand;
-        
+        private ICommand _loginCommand;
 
-        public ICommand SignInCommand
+        public ICommand LoginCommand
         {
-            get => _signInCommand;
-            set => SetProperty(ref _signInCommand, value);
+            get => _loginCommand;
+            set => SetProperty(ref _loginCommand, value);
+        }
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set => SetProperty(ref _username, value);
+        }
+
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
         }
 
         private INavigationService _navigationService;
-        public LoginPageModel(INavigationService navigationService)
+        private IAccountService _accountService;
+        public LoginPageModel(INavigationService navigationService, IAccountService accountService)
         {
             _navigationService = navigationService;
-            SignInCommand = new Command(OnSignInAction);
+            _accountService = accountService;
+
+            // Initializes the login command
+            LoginCommand = new Command(DoLoginAction);
         }
 
-        private void OnSignInAction(object obj)
+        /// <summary>
+        /// Performs the login and navigation if everything is correct.
+        /// there is no actual accounts being verified right now, its all just placeholder stuff.
+        /// </summary>
+        /// <param name="obj"></param>
+        private async void DoLoginAction(object obj)
         {
-            _navigationService.NavigateToAsync<DashboardPageModel>();
+            var loginAttempt = await _accountService.LoginAsync(Username, Password);
+
+            if (loginAttempt)
+            {
+                // navigates to the Dashboard
+                await _navigationService.NavigateToAsync<DashboardPageModel>();
+            }
+            else
+            {
+                // TODO: display an alert for failure 
+            }
+            
         }
     }
 }

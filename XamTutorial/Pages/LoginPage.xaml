@@ -10,7 +10,9 @@
         <StackLayout>
             <Label Text="LoginPage"
                 HorizontalOptions="CenterAndExpand" />
-            <Button Text="Sign In" Command="{Binding SignInCommand}" />
+            <Entry Placeholder="username" Text="{Binding Username}" />
+            <Entry Placeholder="password" Text="{Binding Password}" IsPassword="True" />
+            <Button Text="Log In" Command="{Binding SignInCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -4,6 +4,7 @@ using System.Text;
 using TinyIoC;
 using Xamarin.Forms;
 using XamTutorial.Pages;
+using XamTutorial.Services.Account;
 using XamTutorial.Services.Navigation;
 
 namespace XamTutorial.PageModels.Base
@@ -28,6 +29,7 @@ namespace XamTutorial.PageModels.Base
 
             // Register services (services are registered as Singletons by default)
             _container.Register<INavigationService, NavigationService>();
+            _container.Register<IAccountService, AccountService>();
         }
 
         public static T Resolve<T>() where T : class

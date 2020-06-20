@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace XamTutorial.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DashboardPage : ContentPage
+    public partial class DashboardPage : TabbedPage
     {
         public DashboardPage()
         {
