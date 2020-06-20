@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="XamTutorial.App">
     <Application.Resources>
-
+        <!-- Colors -->
+        <Color x:Key="PrimaryHeaderColor">#01A9DB</Color>
     </Application.Resources>
 </Application>
