@@ -29,7 +29,7 @@ namespace XamTutorial.PageModels.Base
 
             // Register services (services are registered as Singletons by default)
             _container.Register<INavigationService, NavigationService>();
-            _container.Register<IAccountService, AccountService>();
+            _container.Register<IAccountService, MockAccountService>();
         }
 
         public static T Resolve<T>() where T : class
