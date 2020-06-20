@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamTutorial.PageModels;
+using XamTutorial.PageModels.Base;
+using XamTutorial.Services.Navigation;
 
 namespace XamTutorial
 {
@@ -9,12 +13,18 @@ namespace XamTutorial
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
         }
 
-        protected override void OnStart()
+        Task InitNavigation()
         {
+            var navService = PageModelLocator.Resolve<INavigationService>();
+
+            return navService.NavigateToAsync<LoginPageModel>();
+        }
+
+        protected override async void OnStart()
+        {
+            await InitNavigation();
         }
 
         protected override void OnSleep()
