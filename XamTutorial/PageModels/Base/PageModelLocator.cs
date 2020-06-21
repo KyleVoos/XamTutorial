@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using XamTutorial.Pages;
 using XamTutorial.Services.Account;
 using XamTutorial.Services.Navigation;
+using XamTutorial.Services.Statements;
+using XamTutorial.Services.Work;
 
 namespace XamTutorial.PageModels.Base
 {
@@ -27,9 +29,11 @@ namespace XamTutorial.PageModels.Base
             Register<SummaryPageModel, SummaryPage>();
             Register<TimeClockPageModel, TimeClockPage>();
 
-            // Register services (services are registered as Singletons by default)
-            _container.Register<INavigationService, NavigationService>();
+            // Register services (services are registered as Singletons by default)            
             _container.Register<IAccountService, MockAccountService>();
+            _container.Register<INavigationService, NavigationService>();
+            _container.Register<IWorkService, MockWorkService>();
+            _container.Register<IStatementsService, MockStatementsService>();
         }
 
         public static T Resolve<T>() where T : class

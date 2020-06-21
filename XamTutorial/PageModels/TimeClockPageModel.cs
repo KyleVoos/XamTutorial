@@ -7,6 +7,7 @@ using System.Timers;
 using XamTutorial.Models;
 using XamTutorial.PageModels.Base;
 using XamTutorial.Services.Account;
+using XamTutorial.Services.Work;
 using XamTutorial.ViewModels.Buttons;
 
 namespace XamTutorial.PageModels
@@ -58,12 +59,13 @@ namespace XamTutorial.PageModels
         private Timer _timer;
         ObservableCollection<WorkItem> _workItems;
         private IAccountService _accountService;
+        private IWorkService _workService;
         private double _hourlyRate;
 
-        public TimeClockPageModel(IAccountService accountService)
+        public TimeClockPageModel(IAccountService accountService, IWorkService workService)
         {
             _accountService = accountService;
-            WorkItems = new ObservableCollection<WorkItem>();
+            _workService = workService;
             ClockInOutButtonModel = new ButtonModel("Clock In", OnClockInOutAction);
             _timer = new Timer();
             _timer.Interval = 1000;
@@ -80,10 +82,11 @@ namespace XamTutorial.PageModels
         {
             RunningTotal = new TimeSpan();
             _hourlyRate = await _accountService.GetCurrentPayRateAsync();
+            WorkItems = await _workService.GetTodaysWorkAsync();
             await base.InitializeAsync(navigationDate);
         }
 
-        private void OnClockInOutAction()
+        private async void OnClockInOutAction()
         {
             if (IsClockedIn)
             {
@@ -91,11 +94,13 @@ namespace XamTutorial.PageModels
                 TodaysEarnings += _hourlyRate * RunningTotal.TotalHours; // adds the earning from the current period to the total sum
                 RunningTotal = TimeSpan.Zero;   // resets the RunningTotal back to zero
                 ClockInOutButtonModel.Text = "Clock In";
-                WorkItems.Insert(0, new WorkItem    // adds a new work item to the beginning of the collection that is displayed
+                var item = new WorkItem    // adds a new work item to the beginning of the collection that is displayed
                 {
                     Start = CurrentStartTime,
                     End = DateTime.Now
-                });
+                };
+                WorkItems.Insert(0, item);
+                await _workService.LogWorkAsynv(item);
             }
             else
             {
