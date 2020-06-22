@@ -15,7 +15,7 @@ namespace XamTutorial.Services.Work
         {
             Items = new List<WorkItem>();
         }
-        public Task<bool> LogWorkAsynv(WorkItem item)
+        public Task<bool> LogWorkAsync(WorkItem item)
         {
             Items.Add(item);
 

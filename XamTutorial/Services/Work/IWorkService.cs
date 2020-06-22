@@ -9,7 +9,7 @@ namespace XamTutorial.Services.Work
 {
     public interface IWorkService
     {
-        Task<bool> LogWorkAsynv(WorkItem item);
+        Task<bool> LogWorkAsync(WorkItem item);
         Task<ObservableCollection<WorkItem>> GetTodaysWorkAsync();
     }
 }

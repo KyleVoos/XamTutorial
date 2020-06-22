@@ -100,7 +100,7 @@ namespace XamTutorial.PageModels
                     End = DateTime.Now
                 };
                 WorkItems.Insert(0, item);
-                await _workService.LogWorkAsynv(item);
+                await _workService.LogWorkAsync(item);
             }
             else
             {
