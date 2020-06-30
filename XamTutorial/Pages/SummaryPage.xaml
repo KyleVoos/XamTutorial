@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:views="clr-namespace:XamTutorial.Views"
+             xmlns:label="clr-namespace:XamTutorial.Views.Labels"
              mc:Ignorable="d"
              x:Class="XamTutorial.Pages.SummaryPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="10">
             <!-- This Pay Period overview-->
             <Frame>
                 <StackLayout>
-                    <Label Text="Current Pay Period Estimate" />
+                    <label:TitleLabel Text="Current Pay Period Estimate" />
                     <Label Text="{Binding CurrentPayDateRange}" />
                     <Label Text="{Binding CurrentPeriodEarnings, StringFormat='{}{0:C}'}" />
                 </StackLayout>
@@ -18,22 +20,19 @@
             <!-- Next payday -->
             <Frame>
                 <StackLayout>
-                    <Label Text="Payment Date for Current Pay Period" />
+                    <label:TitleLabel Text="Payment Date for Current Period" />
                     <Label Text="{Binding CurrentPeriodPayDate, StringFormat='{}{0:MMMM d, yyyy}'}" />
                 </StackLayout>
             </Frame>
             <!-- previous pay statements-->
             <Frame>
                 <StackLayout>
-                    <Label Text="Pay Statements" />
+                    <label:TitleLabel Text="Pay Statements" />
                     <ListView ItemsSource="{Binding Statements}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding Date}" HorizontalOptions="StartAndExpand" />
-                                        <Label Text="{Binding Earnings}" HorizontalOptions="End" />
-                                    </StackLayout>
+                                    <views:PayStatementView />
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>

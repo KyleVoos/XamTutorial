@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XamTutorial.Models;
@@ -17,9 +18,9 @@ namespace XamTutorial.Services.Statements
                 new PayStatement
                 {
                     Amount = 10,
-                    Date = DateTime.Today,
+                    Date = DateTime.Parse("06/12/2020"),
                     Start = DateTime.Parse("05/24/2020"),
-                    End = DateTime.Parse("06/04/2020"),
+                    End = DateTime.Parse("06/06/2020"),
                     WorkItems = new List<WorkItem>
                     {
                         new WorkItem
@@ -33,7 +34,7 @@ namespace XamTutorial.Services.Statements
         }
         public Task<List<PayStatement>> GetStatementHistoryAsync()
         {
-            return Task.FromResult(_items);
+            return Task.FromResult(_items.OrderByDescending(x => x.Start).ToList());
         }
     }
 }
